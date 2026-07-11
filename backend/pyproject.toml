@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "salespulse-backend"
+version = "1.0.0"
+description = "SalesPulse AI Backend Services"
+authors = ["SalesPulse Team"]
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "I", "W"]
+ignore = []
