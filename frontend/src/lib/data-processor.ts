@@ -218,7 +218,20 @@ function detectColumn(headers: string[], fieldName: string): string | null {
 
   // Fuzzy: check if any header contains the alias
   for (const alias of aliases) {
-    const idx = normalized.findIndex((h) => h.includes(alias.toLowerCase()));
+    const idx = normalized.findIndex((h) => {
+      const headerNorm = h.toLowerCase();
+      // Exclude IDs, Types, Age, or Gender from mapping to 'customer_name'
+      if (fieldName === "customer_name" && (
+        headerNorm.includes("type") || 
+        headerNorm.includes("id") || 
+        headerNorm.includes("age") || 
+        headerNorm.includes("gender") ||
+        headerNorm.includes("sex")
+      )) {
+        return false;
+      }
+      return headerNorm.includes(alias.toLowerCase());
+    });
     if (idx !== -1) return headers[idx];
   }
 
@@ -361,8 +374,8 @@ export function cleanData(rawRows: RawRow[]): { rows: CleanedRow[]; report: Clea
     const city = get("city") || state;
     const category = get("category") || "General";
     const subCat = get("sub_category") || category;
-    const customerName = get("customer_name") || `Customer #${rowIndex}`;
     const customerId = get("customer_id") || `CUST-${rowIndex.toString().padStart(4, "0")}`;
+    const customerName = get("customer_name") || `Customer #${customerId.split("-")[1] || rowIndex}`;
     const salesId = get("sales_id") || `S-${rowIndex.toString().padStart(6, "0")}`;
 
     cleaned.push({
