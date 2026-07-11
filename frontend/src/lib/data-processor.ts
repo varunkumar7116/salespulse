@@ -375,7 +375,7 @@ export function cleanData(rawRows: RawRow[]): { rows: CleanedRow[]; report: Clea
     const category = get("category") || "General";
     const subCat = get("sub_category") || category;
     const customerId = get("customer_id") || `CUST-${rowIndex.toString().padStart(4, "0")}`;
-    const customerName = get("customer_name") || `Customer #${customerId.split("-")[1] || rowIndex}`;
+    const customerName = get("customer_name") || get("salesperson") || `Customer #${customerId.split("-")[1] || rowIndex}`;
     const salesId = get("sales_id") || `S-${rowIndex.toString().padStart(6, "0")}`;
 
     cleaned.push({
