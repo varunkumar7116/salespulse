@@ -258,13 +258,13 @@ export default function UploadPage() {
                 <div className="space-y-3">
                   <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Schema Map Audit</p>
                   <div className="flex flex-wrap gap-1.5">
-                    {activeDataset.report.columnsFound.map((col) => (
-                      <span key={col} className="badge bg-success/10 text-success border border-success/20 text-[10px] capitalize">
+                    {activeDataset.report.columnsFound.map((col, i) => (
+                      <span key={`found-${col}-${i}`} className="badge bg-success/10 text-success border border-success/20 text-[10px] capitalize">
                         ✓ {col}
                       </span>
                     ))}
-                    {activeDataset.report.columnsMissing.map((col) => (
-                      <span key={col} className="badge bg-destructive/10 text-destructive border border-destructive/20 text-[10px] capitalize">
+                    {activeDataset.report.columnsMissing.map((col, i) => (
+                      <span key={`missing-${col}-${i}`} className="badge bg-destructive/10 text-destructive border border-destructive/20 text-[10px] capitalize">
                         ⚠ Missing: {col}
                       </span>
                     ))}
