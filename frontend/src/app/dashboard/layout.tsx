@@ -5,19 +5,24 @@ import Sidebar from "@/components/layout/sidebar";
 import Topbar from "@/components/layout/topbar";
 import { useAuthStore } from "@/store/auth-store";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuthStore();
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted && !isAuthenticated) {
       router.push("/login");
     }
-  }, [isAuthenticated, router]);
+  }, [mounted, isAuthenticated, router]);
 
-  if (!isAuthenticated) return null;
+  if (!mounted || !isAuthenticated) return null;
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
