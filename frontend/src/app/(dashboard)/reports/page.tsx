@@ -11,10 +11,8 @@ import { useDatasetStore } from "@/store/dataset-store";
 import { formatCurrency, formatNumber } from "@/lib/data-processor";
 import { toast } from "sonner";
 import jsPDF from "jspdf";
-import { applyPlugin } from "jspdf-autotable";
+import { autoTable } from "jspdf-autotable";
 import * as XLSX from "xlsx";
-
-applyPlugin(jsPDF);
 
 export default function ReportsPage() {
   const { kpis, sales, products, activeDatasetId, datasets } = useDatasetStore();
@@ -66,7 +64,7 @@ export default function ReportsPage() {
         ["Total Orders", formatNumber(kpis.totalOrders), "Unique Customers", formatNumber(kpis.totalCustomers)]
       ];
       
-      doc.autoTable({
+      autoTable(doc, {
         startY: 70,
         head: [],
         body: kpiData,
@@ -95,7 +93,7 @@ export default function ReportsPage() {
           formatCurrency(p.revenue)
         ]);
 
-        doc.autoTable({
+        autoTable(doc, {
           startY: currentY + 5,
           head: [["Rank", "Product Name", "Category", "Quantity Sold", "Revenue"]],
           body: topProds,
@@ -119,7 +117,7 @@ export default function ReportsPage() {
           formatNumber(r.orders)
         ]);
 
-        doc.autoTable({
+        autoTable(doc, {
           startY: currentY + 5,
           head: [["Sales Region", "Revenue", "Profit", "Transactions Count"]],
           body: geo,

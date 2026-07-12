@@ -23,6 +23,7 @@ export interface Dataset {
   status: "processing" | "ready" | "error";
   report?: CleaningReport;
   profile?: DataProfile;
+  rowsData?: CleanedRow[];
 }
 
 interface DatasetState {
@@ -70,7 +71,7 @@ export const useDatasetStore = create<DatasetState>()(
       error: null,
 
       addDataset: (dataset, rows, report, profile) => {
-        const updated = { ...dataset, status: "ready" as const, report, profile };
+        const updated = { ...dataset, status: "ready" as const, report, profile, rowsData: rows };
         set((state) => ({
           datasets: [updated, ...state.datasets.filter(d => d.id !== dataset.id)],
           activeDatasetId: dataset.id,
@@ -82,7 +83,12 @@ export const useDatasetStore = create<DatasetState>()(
       },
 
       setActiveDataset: (id) => {
-        set({ activeDatasetId: id });
+        const target = get().datasets.find(d => d.id === id);
+        if (target && target.rowsData) {
+          set({ activeDatasetId: id, rows: target.rowsData });
+        } else {
+          set({ activeDatasetId: id });
+        }
         get().computeAnalytics();
       },
 
@@ -121,11 +127,45 @@ export const useDatasetStore = create<DatasetState>()(
     }),
     {
       name: "salespulse-datasets",
-      partialize: (state) => ({
-        datasets: state.datasets.map(d => ({ ...d, report: d.report, profile: undefined })),
-        activeDatasetId: state.activeDatasetId,
-        // Don't persist large row arrays — recompute from localStorage
-      }),
+      storage: {
+        getItem: (name) => {
+          const str = localStorage.getItem(name);
+          if (!str) return null;
+          try {
+            const parsed = JSON.parse(str);
+            if (parsed.state) {
+              // Revive Date objects in state.rows
+              if (Array.isArray(parsed.state.rows)) {
+                parsed.state.rows = parsed.state.rows.map((row: any) => ({
+                  ...row,
+                  order_date: row.order_date ? new Date(row.order_date) : new Date()
+                }));
+              }
+              // Revive Date objects in state.datasets[...].rowsData
+              if (Array.isArray(parsed.state.datasets)) {
+                parsed.state.datasets = parsed.state.datasets.map((d: any) => {
+                  if (Array.isArray(d.rowsData)) {
+                    return {
+                      ...d,
+                      rowsData: d.rowsData.map((row: any) => ({
+                        ...row,
+                        order_date: row.order_date ? new Date(row.order_date) : new Date()
+                      }))
+                    };
+                  }
+                  return d;
+                });
+              }
+            }
+            return parsed;
+          } catch (e) {
+            console.error("Failed to parse persisted dataset store:", e);
+            return null;
+          }
+        },
+        setItem: (name, value) => localStorage.setItem(name, JSON.stringify(value)),
+        removeItem: (name) => localStorage.removeItem(name)
+      }
     }
   )
 );
