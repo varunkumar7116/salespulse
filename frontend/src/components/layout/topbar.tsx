@@ -97,9 +97,18 @@ export default function Topbar({ title }: { title?: string }) {
 
       {/* User Avatar */}
       <div className="flex items-center gap-2 cursor-pointer group">
-        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-chart-5 flex items-center justify-center text-white text-xs font-bold">
-          {(user?.name || user?.email || "A").charAt(0).toUpperCase()}
-        </div>
+        {user?.picture ? (
+          <img
+            src={user.picture}
+            alt={user.name || "User Avatar"}
+            className="w-8 h-8 rounded-full object-cover border border-border"
+            referrerPolicy="no-referrer"
+          />
+        ) : (
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-chart-5 flex items-center justify-center text-white text-xs font-bold">
+             {(user?.name || user?.email || "A").charAt(0).toUpperCase()}
+          </div>
+        )}
         <div className="hidden md:block text-xs">
           <p className="font-semibold text-foreground">{user?.name || "Admin"}</p>
           <p className="text-muted-foreground capitalize">{user?.role || "admin"}</p>

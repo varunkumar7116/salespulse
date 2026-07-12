@@ -8,6 +8,7 @@ export interface User {
   email: string;
   name: string;
   role: "admin" | "viewer";
+  picture?: string;
 }
 
 export interface RegisteredUser {
@@ -22,7 +23,7 @@ interface AuthState {
   users: Record<string, RegisteredUser>;
   login: (email: string, password: string) => { success: boolean; error?: string };
   registerUser: (name: string, email: string, password?: string, provider?: "local" | "google") => { success: boolean; error?: string };
-  loginWithGoogle: (email: string, name: string) => { success: boolean };
+  loginWithGoogle: (email: string, name: string, picture?: string) => { success: boolean };
   logout: () => void;
 }
 
@@ -96,7 +97,7 @@ export const useAuthStore = create<AuthState>()(
         return { success: true };
       },
 
-      loginWithGoogle: (email, name) => {
+      loginWithGoogle: (email, name, picture) => {
         const emailKey = email.toLowerCase().trim();
         const users = get().users || {};
         let targetUser = users[emailKey]?.user;
@@ -109,12 +110,17 @@ export const useAuthStore = create<AuthState>()(
             email: emailKey,
             name,
             role: "viewer",
+            picture,
           };
-          updatedUsers[emailKey] = {
-            user: targetUser,
-            provider: "google",
-          };
+        } else if (picture) {
+          // Update picture if it changed
+          targetUser = { ...targetUser, picture };
         }
+
+        updatedUsers[emailKey] = {
+          user: targetUser,
+          provider: "google",
+        };
 
         set({ users: updatedUsers, user: targetUser, isAuthenticated: true });
         

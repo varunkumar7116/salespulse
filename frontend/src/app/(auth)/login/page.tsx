@@ -1,9 +1,10 @@
 "use client";
 // app/(auth)/login/page.tsx
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Script from "next/script";
 import { Eye, EyeOff, Zap, BarChart3, TrendingUp, Brain, ArrowRight, Lock, Mail, User, ShieldCheck, Check } from "lucide-react";
 import { useAuthStore } from "@/store/auth-store";
 import { toast } from "sonner";
@@ -29,6 +30,23 @@ const GoogleIcon = () => (
   </svg>
 );
 
+function decodeJwt(token: string) {
+  try {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      window.atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    console.error("Failed to decode Google ID token:", e);
+    return null;
+  }
+}
+
 export default function LoginPage() {
   const [activeTab, setActiveTab] = useState<"login" | "register">(() => {
     if (typeof window !== "undefined") {
@@ -51,9 +69,53 @@ export default function LoginPage() {
   const [googleCustomEmail, setGoogleCustomEmail] = useState("");
   const [googleCustomName, setGoogleCustomName] = useState("");
   const [showCustomGoogleForm, setShowCustomGoogleForm] = useState(false);
+  const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
 
   const { login, registerUser, loginWithGoogle } = useAuthStore();
   const router = useRouter();
+
+  const handleGoogleCredentialResponse = (response: any) => {
+    try {
+      const payload = decodeJwt(response.credential);
+      if (payload) {
+        const { email, name, picture } = payload;
+        loginWithGoogle(email, name, picture);
+        document.cookie = "token=mock-token; path=/; max-age=86400; SameSite=Lax";
+        toast.success(`Welcome ${name}! Signed in via Google.`);
+        router.push("/dashboard");
+      } else {
+        toast.error("Failed to parse Google credentials.");
+      }
+    } catch (err) {
+      console.error("Google Auth error:", err);
+      toast.error("An error occurred during Google Sign-in.");
+    }
+  };
+
+  useEffect(() => {
+    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+    if (clientId && googleScriptLoaded && typeof window !== "undefined" && (window as any).google) {
+      try {
+        (window as any).google.accounts.id.initialize({
+          client_id: clientId,
+          callback: handleGoogleCredentialResponse,
+        });
+
+        const container = document.getElementById("google-signin-button");
+        if (container) {
+          (window as any).google.accounts.id.renderButton(container, {
+            theme: "outline",
+            size: "large",
+            width: container.offsetWidth || 380,
+            text: "signin_with",
+            shape: "rectangular",
+          });
+        }
+      } catch (err) {
+        console.error("Google SDK Initialization failed:", err);
+      }
+    }
+  }, [googleScriptLoaded, activeTab]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -408,13 +470,19 @@ export default function LoginPage() {
           </div>
 
           {/* Google SSO Button */}
-          <button
-            onClick={() => setShowGoogleModal(true)}
-            className="w-full flex items-center justify-center px-4 py-3 rounded-xl border border-border/60 bg-muted/20 text-foreground text-sm font-semibold hover:bg-muted/40 transition-colors shadow-sm group active:scale-[0.99]"
-          >
-            <GoogleIcon />
-            <span>Sign In with Google</span>
-          </button>
+          {process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ? (
+            <div className="w-full flex justify-center min-h-[44px] relative z-10 my-1">
+              <div id="google-signin-button" className="w-full max-w-full flex justify-center"></div>
+            </div>
+          ) : (
+            <button
+              onClick={() => setShowGoogleModal(true)}
+              className="w-full flex items-center justify-center px-4 py-3 rounded-xl border border-border/60 bg-muted/20 text-foreground text-sm font-semibold hover:bg-muted/40 transition-colors shadow-sm group active:scale-[0.99]"
+            >
+              <GoogleIcon />
+              <span>Sign In with Google</span>
+            </button>
+          )}
 
           <div className="flex items-center justify-between text-xs text-muted-foreground pt-4 border-t border-border/30">
             <Link href="/forgot-password" className="hover:text-primary transition-colors">
@@ -569,6 +637,12 @@ export default function LoginPage() {
           </div>
         </div>
       )}
+      
+      <Script
+        src="https://accounts.google.com/gsi/client"
+        onLoad={() => setGoogleScriptLoaded(true)}
+        onError={() => console.error("Failed to load Google SDK script")}
+      />
     </div>
   );
 }
