@@ -58,7 +58,7 @@ export default function Sidebar() {
           </div>
           {!collapsed && (
             <div className="min-w-0 animate-fade-in">
-              <p className="text-sm font-bold text-foreground truncate leading-tight">SalesPulse AI</p>
+              <p className="text-sm font-bold text-foreground truncate leading-tight">SalesPulse</p>
               <p className="text-[10px] text-muted-foreground truncate">Business Intelligence</p>
             </div>
           )}

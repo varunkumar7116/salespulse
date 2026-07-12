@@ -35,7 +35,7 @@ export default function ReportsPage() {
       doc.setTextColor(255, 255, 255);
       doc.setFont("helvetica", "bold");
       doc.setFontSize(22);
-      doc.text("SALESPULSE AI", 15, 18);
+      doc.text("SALESPULSE", 15, 18);
 
       doc.setFont("helvetica", "normal");
       doc.setFontSize(10);
@@ -144,7 +144,7 @@ export default function ReportsPage() {
 
       // Sheet 1: Executive KPI Overview
       const kpiSheetData = [
-        ["SALESPULSE AI EXECUTIVE BI SUMMARY REPORT"],
+        ["SALESPULSE EXECUTIVE BI SUMMARY REPORT"],
         [],
         ["Metric Title", "Value", "Growth Rates"],
         ["Total Revenue", kpis.totalRevenue, `${kpis.revenueGrowth}%`],

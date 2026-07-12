@@ -72,7 +72,7 @@ export const useAiStore = create<AiState>((set) => ({
       id: "welcome",
       sender: "assistant",
       content:
-        "Welcome to SalesPulse AI Copilot. I can query our sales database, compile revenue updates, and assist in running predictive time-series models. Ask me anything about our sales data.",
+        "Welcome to SalesPulse Copilot. I can query our sales database, compile revenue updates, and assist in running predictive time-series models. Ask me anything about our sales data.",
       timestamp: new Date().toISOString(),
     },
   ],
@@ -136,7 +136,7 @@ export const useAiStore = create<AiState>((set) => ({
           id: "welcome",
           sender: "assistant",
           content:
-            "Welcome to SalesPulse AI Copilot. I can query our sales database, compile revenue updates, and assist in running predictive time-series models. Ask me anything about our sales data.",
+            "Welcome to SalesPulse Copilot. I can query our sales database, compile revenue updates, and assist in running predictive time-series models. Ask me anything about our sales data.",
           timestamp: new Date().toISOString(),
         },
       ],

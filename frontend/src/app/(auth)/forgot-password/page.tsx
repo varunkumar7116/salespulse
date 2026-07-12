@@ -36,7 +36,7 @@ export default function ForgotPasswordPage() {
             <Zap className="w-5 h-5 text-white" />
           </div>
           <div>
-            <p className="text-lg font-bold text-foreground">SalesPulse AI</p>
+            <p className="text-lg font-bold text-foreground">SalesPulse</p>
             <p className="text-xs text-muted-foreground">Internal Portal</p>
           </div>
         </div>
@@ -51,7 +51,7 @@ export default function ForgotPasswordPage() {
         </div>
 
         <div className="relative text-xs text-muted-foreground">
-          © {new Date().getFullYear()} SalesPulse AI. Authorized access only.
+          © {new Date().getFullYear()} SalesPulse. Authorized access only.
         </div>
       </div>
 
@@ -73,7 +73,7 @@ export default function ForgotPasswordPage() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="admin@salespulse.ai"
+                    placeholder="admin@salespulse.com"
                     required
                     className="input-field pl-10"
                   />

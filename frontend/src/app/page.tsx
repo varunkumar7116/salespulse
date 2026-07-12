@@ -55,7 +55,7 @@ export default function LandingPage() {
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center glow-primary">
               <Zap className="w-4 h-4 text-white" />
             </div>
-            <span className="font-bold text-lg text-foreground">SalesPulse AI</span>
+            <span className="font-bold text-lg text-foreground">SalesPulse</span>
           </div>
           <nav className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">
             <a href="#features" className="hover:text-foreground transition-colors">Features</a>
@@ -234,7 +234,7 @@ export default function LandingPage() {
             Launch Platform
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
-          <p className="text-xs text-muted-foreground mt-4">Use demo credentials: admin@salespulse.ai / admin123</p>
+          <p className="text-xs text-muted-foreground mt-4">Use demo credentials: admin@salespulse.com / admin123</p>
         </div>
       </section>
 
@@ -245,10 +245,10 @@ export default function LandingPage() {
             <div className="w-6 h-6 rounded bg-primary flex items-center justify-center">
               <Zap className="w-3 h-3 text-white" />
             </div>
-            <span className="text-sm font-bold text-foreground">SalesPulse AI</span>
+            <span className="text-sm font-bold text-foreground">SalesPulse</span>
           </div>
           <p className="text-xs text-muted-foreground text-center">
-            © {new Date().getFullYear()} SalesPulse AI — AI Business Intelligence Platform. All rights reserved.
+            © {new Date().getFullYear()} SalesPulse — Business Intelligence Platform. All rights reserved.
           </p>
           <div className="flex items-center gap-4 text-xs text-muted-foreground">
             <Link href="/login" className="hover:text-foreground transition-colors">Login</Link>

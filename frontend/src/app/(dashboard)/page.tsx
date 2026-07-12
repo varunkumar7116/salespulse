@@ -54,7 +54,7 @@ export default function DashboardHome() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-primary/10 via-background to-chart-5/5 p-6 rounded-2xl border border-border">
         <div>
           <h1 className="text-2xl font-black text-foreground tracking-tight flex items-center gap-2">
-            Welcome to SalesPulse AI <Sparkles className="w-5 h-5 text-primary animate-pulse" />
+            Welcome to SalesPulse <Sparkles className="w-5 h-5 text-primary animate-pulse" />
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
             Analyze, predict, and optimize your business performance with automated BI pipelines.
@@ -126,7 +126,7 @@ export default function DashboardHome() {
                 <Shield className="w-4 h-4 text-primary" /> Privacy & Security
               </h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                SalesPulse AI processes all file transactions directly in your browser. None of your corporate financial or customer data is transmitted to our servers.
+                SalesPulse processes all file transactions directly in your browser. None of your corporate financial or customer data is transmitted to our servers.
               </p>
               <div className="flex items-center gap-2 p-2.5 rounded-lg bg-success/5 border border-success/20 text-success text-[11px] font-semibold">
                 <Check className="w-3.5 h-3.5 shrink-0" />

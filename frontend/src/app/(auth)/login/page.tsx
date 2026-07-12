@@ -54,7 +54,7 @@ export default function LoginPage() {
     }
     return "login";
   });
-  const [email, setEmail] = useState("admin@salespulse.ai");
+  const [email, setEmail] = useState("admin@salespulse.com");
   const [password, setPassword] = useState("admin123");
   const [name, setName] = useState("");
   const [inviteCode, setInviteCode] = useState("");
@@ -154,7 +154,7 @@ export default function LoginPage() {
             <Zap className="w-5 h-5 text-white" />
           </div>
           <div>
-            <p className="text-lg font-bold text-foreground">SalesPulse AI</p>
+            <p className="text-lg font-bold text-foreground">SalesPulse</p>
             <p className="text-xs text-muted-foreground">Business Intelligence Platform</p>
           </div>
         </div>
@@ -214,7 +214,7 @@ export default function LoginPage() {
             <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
               <Zap className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-foreground">SalesPulse AI</span>
+            <span className="text-xl font-bold text-foreground">SalesPulse</span>
           </div>
 
           {/* Header */}
@@ -271,7 +271,7 @@ export default function LoginPage() {
                     type="text"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="admin@salespulse.ai"
+                    placeholder="admin@salespulse.com"
                     className="input-field pl-10"
                     autoComplete="email"
                   />
@@ -484,7 +484,7 @@ export default function LoginPage() {
                   </div>
                   <h3 className="text-xl font-bold text-foreground">Sign in with Google</h3>
                   <p className="text-xs text-muted-foreground">
-                    Choose a mock Google Account to continue to <span className="font-semibold">SalesPulse AI</span>
+                    Choose a mock Google Account to continue to <span className="font-semibold">SalesPulse</span>
                   </p>
                 </div>
 

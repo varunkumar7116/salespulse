@@ -10,20 +10,20 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "SalesPulse AI",
-    template: "%s | SalesPulse AI",
+    default: "SalesPulse",
+    template: "%s | SalesPulse",
   },
   description:
-    "Enterprise-grade AI Sales Analytics Platform. Explore metrics, forecasting models, customer churn prediction, and geospatial mapping.",
+    "Enterprise-grade Sales Analytics Platform. Explore metrics, forecasting models, customer churn prediction, and geospatial mapping.",
   keywords: [
     "sales",
     "analytics",
     "forecasting",
-    "AI insights",
+    "insights",
     "SaaS",
     "business intelligence",
   ],
-  authors: [{ name: "SalesPulse AI Team" }],
+  authors: [{ name: "SalesPulse Team" }],
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
   ),

@@ -29,19 +29,19 @@ interface AuthState {
 
 // Demo credentials
 const DEFAULT_USERS: Record<string, RegisteredUser> = {
-  "admin@salespulse.ai": {
+  "admin@salespulse.com": {
     password: "admin123",
-    user: { id: "usr_001", email: "admin@salespulse.ai", name: "Admin User", role: "admin" },
+    user: { id: "usr_001", email: "admin@salespulse.com", name: "Admin User", role: "admin" },
     provider: "local",
   },
   "admin": {
     password: "admin123",
-    user: { id: "usr_001", email: "admin@salespulse.ai", name: "Admin User", role: "admin" },
+    user: { id: "usr_001", email: "admin@salespulse.com", name: "Admin User", role: "admin" },
     provider: "local",
   },
-  "demo@salespulse.ai": {
+  "demo@salespulse.com": {
     password: "demo123",
-    user: { id: "usr_002", email: "demo@salespulse.ai", name: "Demo User", role: "viewer" },
+    user: { id: "usr_002", email: "demo@salespulse.com", name: "Demo User", role: "viewer" },
     provider: "local",
   },
 };
@@ -63,7 +63,7 @@ export const useAuthStore = create<AuthState>()(
           useDatasetStore.getState().loadUserWorkspace(entry.user.id);
           return { success: true };
         }
-        return { success: false, error: "Invalid credentials. Try admin@salespulse.ai / admin123" };
+        return { success: false, error: "Invalid credentials. Try admin@salespulse.com / admin123" };
       },
 
       registerUser: (name, email, password, provider = "local") => {
