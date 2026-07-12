@@ -11,8 +11,10 @@ import { useDatasetStore } from "@/store/dataset-store";
 import { formatCurrency, formatNumber } from "@/lib/data-processor";
 import { toast } from "sonner";
 import jsPDF from "jspdf";
-import "jspdf-autotable";
+import { applyPlugin } from "jspdf-autotable";
 import * as XLSX from "xlsx";
+
+applyPlugin(jsPDF);
 
 export default function ReportsPage() {
   const { kpis, sales, products, activeDatasetId, datasets } = useDatasetStore();
