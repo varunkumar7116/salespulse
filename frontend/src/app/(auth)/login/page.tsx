@@ -116,14 +116,6 @@ export default function LoginPage() {
             <p className="mt-2 text-sm text-muted-foreground">Sign in to access your analytics dashboard</p>
           </div>
 
-          {/* Demo Credentials Box */}
-          <div className="p-4 rounded-xl bg-primary/5 border border-primary/20">
-            <p className="text-xs font-semibold text-primary mb-2">🎯 Demo Credentials</p>
-            <div className="space-y-1 text-xs text-muted-foreground font-mono">
-              <p>Email: <span className="text-foreground">admin@salespulse.ai</span></p>
-              <p>Password: <span className="text-foreground">admin123</span></p>
-            </div>
-          </div>
 
           {/* Form */}
           <form onSubmit={handleLogin} className="space-y-5">
